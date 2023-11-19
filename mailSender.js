@@ -7,10 +7,14 @@ const URL = "http://ip-api.com/json/";
 
 const sendAPIRequest = async (ipAddress) => {
   console.log(ipAddress);
-  const apiResponse = await fetch("http://ip-api.com/json/" + ipAddress);
-  const apiResponseJSON = await apiResponse.json();
+  try {
+    const apiResponse = await fetch("http://ip-api.com/json/" + ipAddress);
+    const apiResponseJSON = await apiResponse.json();
+    return apiResponseJSON;
+  } catch (error) {
+    console.error(error);
+  }
   console.log(apiResponseJSON);
-  return apiResponseJSON;
 };
 
 async function sendMail(req, res) {
