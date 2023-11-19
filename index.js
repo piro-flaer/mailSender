@@ -3,7 +3,22 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5174",
+  "https://akshat-garg.netlify.app",
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 const PORT = 6700;
 
