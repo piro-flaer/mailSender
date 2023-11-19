@@ -3,11 +3,14 @@ const nodemailer = require("nodemailer");
 const IP = require("ip");
 
 const API_KEY = process.env.API_KEY;
-const URL = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + API_KEY;
+const URL = "http://ip-api.com/json/";
 
 const sendAPIRequest = async (ipAddress) => {
-  const apiResponse = await axios.get(URL + "&ip_address=" + ipAddress);
-  return apiResponse.data;
+  console.log(ipAddress);
+  const apiResponse = await fetch("http://ip-api.com/json/" + ipAddress);
+  const apiResponseJSON = await apiResponse.json();
+  console.log(apiResponseJSON);
+  return apiResponseJSON;
 };
 
 async function sendMail(req, res) {
@@ -20,7 +23,9 @@ async function sendMail(req, res) {
 
   var result = await sendAPIRequest(ipaddresses[2]);
 
-  var sendResult = `IP - ${result.ip_address}\nCountry - ${result.country}\nCity - ${result.City}\nContinent - ${result.continent}`;
+  console.log(result);
+
+  // var sendResult = `IP - ${result.ip_address}\nCountry - ${result.country}\nCity - ${result.City}\nContinent - ${result.continent}`;
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -36,7 +41,7 @@ async function sendMail(req, res) {
     from: process.env.GMAIL_EMAIL,
     to: "akshatg805@gmail.com",
     subject: "Someone came",
-    text: sendResult,
+    text: JSON.stringify(result),
   };
 
   transporter.sendMail(mailOptions);
