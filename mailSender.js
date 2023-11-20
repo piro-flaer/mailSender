@@ -30,8 +30,12 @@ async function sendMail(req, res) {
 
   var result01 = await sendAPIRequest01(ipaddresses[2]);
   var result02 = await sendAPIRequest02(ipaddresses[2]);
+
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   var result03 = await sendAPIRequest01(ipaddresses[1]);
   var result04 = await sendAPIRequest02(ipaddresses[1]);
+
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   var result05 = await sendAPIRequest01(ipaddresses[0]);
   var result06 = await sendAPIRequest02(ipaddresses[0]);
 
