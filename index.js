@@ -28,14 +28,6 @@ app.set("trust proxy", true);
 
 app.use("/", require("./mailSender"));
 
-// Update your routes to include the 'Access-Control-Allow-Origin' header
-app.use("/", (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://akshat-garg.netlify.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
-
 app.listen(PORT, () => {
   console.log(`Server Started on port ${PORT}`);
 });
