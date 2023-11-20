@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node",
     "dev": "nodemon"
   },
   "author": "",
@@ -17,5 +18,8 @@
     "ip": "^1.1.8",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": "19.8.1"
   }
 }
