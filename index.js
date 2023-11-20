@@ -6,14 +6,15 @@ const cors = require("cors");
 const allowedOrigins = [
   "http://localhost:5174",
   "https://akshat-garg.netlify.app",
-  "https://mail-sender-exby.onrender.com"
+  "https://akshat-garg.netlify.app/",
+  "https://mail-sender-exby.onrender.com",
 ];
 const corsOptions = {
   origin: (origin, callback) => {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("====>>>>>>>>>Not allowed by CORS"));
     }
   },
   credentials: true,
