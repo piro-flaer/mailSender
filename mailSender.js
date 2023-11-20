@@ -3,10 +3,14 @@ const nodemailer = require("nodemailer");
 const IP = require("ip");
 
 const API_KEY = process.env.API_KEY;
-const URL = "http://ip-api.com/json/";
+const URL = "https://ipgeolocation.abstractapi.com/v1/?api_key=" + API_KEY;
 
-const sendAPIRequest = async (ipAddress) => {
-  console.log(ipAddress);
+const sendAPIRequest01 = async (ipAddress) => {
+  const apiResponse = await axios.get(URL + "&ip_address=" + ipAddress);
+  return apiResponse.data;
+};
+
+const sendAPIRequest02 = async (ipAddress) => {
   try {
     const apiResponse = await fetch("http://ip-api.com/json/" + ipAddress);
     const apiResponseJSON = await apiResponse.json();
@@ -14,7 +18,6 @@ const sendAPIRequest = async (ipAddress) => {
   } catch (error) {
     console.error(error);
   }
-  console.log(apiResponseJSON);
 };
 
 async function sendMail(req, res) {
@@ -25,11 +28,18 @@ async function sendMail(req, res) {
     req.headers["x-forwarded-for"],
   ];
 
-  var result = await sendAPIRequest(ipaddresses[2]);
+  var result01 = await sendAPIRequest01(ipaddresses[2]);
+  var result02 = await sendAPIRequest02(ipaddresses[2]);
+  var result03 = await sendAPIRequest01(ipaddresses[1]);
+  var result04 = await sendAPIRequest02(ipaddresses[1]);
+  var result05 = await sendAPIRequest01(ipaddresses[0]);
+  var result06 = await sendAPIRequest02(ipaddresses[0]);
 
-  console.log(result);
-
-  // var sendResult = `IP - ${result.ip_address}\nCountry - ${result.country}\nCity - ${result.City}\nContinent - ${result.continent}`;
+  var sendResult = `${JSON.stringify(result01)}\n${JSON.stringify(
+    result02
+  )}\n${JSON.stringify(result03)}\n${JSON.stringify(
+    result04
+  )}\n${JSON.stringify(result05)}\n${JSON.stringify(result06)}`;
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -45,7 +55,7 @@ async function sendMail(req, res) {
     from: process.env.GMAIL_EMAIL,
     to: "akshatg805@gmail.com",
     subject: "Someone came",
-    text: JSON.stringify(result),
+    text: sendResult,
   };
 
   transporter.sendMail(mailOptions);
