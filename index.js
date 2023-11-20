@@ -6,6 +6,7 @@ const cors = require("cors");
 const allowedOrigins = [
   "http://localhost:5174",
   "https://akshat-garg.netlify.app",
+  "https://mail-sender-exby.onrender.com"
 ];
 const corsOptions = {
   origin: (origin, callback) => {
