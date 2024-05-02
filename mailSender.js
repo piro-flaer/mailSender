@@ -21,6 +21,12 @@ const sendAPIRequest02 = async (ipAddress) => {
 };
 
 async function sendMail(req, res) {
+  const originWebsite =
+    req.header("origin") === "https://threejs-portfolio.akshat-garg.com"
+      ? "threejs"
+      : "macos";
+  const user = req.query.user;
+
   const ipaddresses = [req.ip, req.socket.remoteAddress, IP.address()];
 
   var result05 = await sendAPIRequest01(ipaddresses[0]);
@@ -49,7 +55,7 @@ async function sendMail(req, res) {
   const mailOptions = {
     from: process.env.GMAIL_EMAIL,
     to: "akshatg805@gmail.com",
-    subject: `Someone came req.header("origin")`,
+    subject: `Someone came ${user} ${originWebsite}`,
     text: sendResult,
   };
 
