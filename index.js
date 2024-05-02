@@ -28,8 +28,6 @@ const PORT = 6700;
 
 app.set("trust proxy", true);
 
-console.log();
-
 app.use("/", require("./mailSender"));
 
 app.listen(PORT, () => {
