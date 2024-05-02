@@ -53,7 +53,7 @@ async function sendMail(req, res) {
     text: sendResult,
   };
 
-  // transporter.sendMail(mailOptions);
+  transporter.sendMail(mailOptions);
 
   res.sendStatus(200);
 }
